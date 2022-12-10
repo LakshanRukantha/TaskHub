@@ -20,13 +20,16 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import InfoIcon from "@mui/icons-material/Info";
 
 const drawerWidth = 240;
 
 const pages = [
-  { id: "01", name: "Tasks", link: "/tasks" },
-  { id: "02", name: "New Task", link: "/newtask" },
-  { id: "03", name: "About", link: "/about" },
+  { id: "01", name: "Tasks", link: "/tasks", icon: <AssignmentIcon /> },
+  { id: "02", name: "New Task", link: "/newtask", icon: <AddCircleIcon /> },
+  { id: "03", name: "About", link: "/about", icon: <InfoIcon /> },
 ];
 const settings = ["Profile", "Logout"];
 
@@ -90,7 +93,13 @@ function ResponsiveAppBar(props) {
                 paddingLeft: 4,
               }}
             >
-              <ListItemText primary={item.name} />
+              {item.icon}
+              <ListItemText
+                sx={{
+                  marginLeft: 1,
+                }}
+                primary={item.name}
+              />
             </ListItemButton>
           </Box>
         ))}
@@ -124,13 +133,23 @@ function ResponsiveAppBar(props) {
             TASKHUB
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box
+            sx={{
+              flexGrow: 0,
+              display: { xs: "flex", sm: "none", md: "none" },
+            }}
+          >
             <IconButton
-              size="large"
+              size="medium"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               color="inherit"
+              sx={{
+                padding: 1.2,
+                backgroundColor: "#42A5F540",
+                boxShadow: "1px 1px 10px #00000020",
+              }}
               onClick={handleDrawerToggle}
             >
               <MenuIcon />
@@ -147,7 +166,7 @@ function ResponsiveAppBar(props) {
                 horizontal: "left",
               }}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { sm: "block", md: "none" },
                 mt: 1,
               }}
             >
@@ -165,26 +184,39 @@ function ResponsiveAppBar(props) {
               ))}
             </Menu>
           </Box>
-          <AddTaskIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              margin: "auto",
             }}
           >
-            TASKHUB
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <AddTaskIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              sx={{
+                mr: 2,
+                display: { xs: "flex", sm: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              TASKHUB
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "flex", md: "flex" },
+            }}
+          >
             {pages.map((page) => (
               <Button
                 component={Link}
@@ -229,7 +261,7 @@ function ResponsiveAppBar(props) {
         </Toolbar>
       </Container>
       <div>
-        <SwipeableDrawer
+        <Drawer
           container={container}
           variant="temporary"
           open={mobileOpen}
@@ -246,7 +278,7 @@ function ResponsiveAppBar(props) {
           }}
         >
           {drawer}
-        </SwipeableDrawer>
+        </Drawer>
       </div>
     </AppBar>
   );
