@@ -11,34 +11,95 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 
+const drawerWidth = 240;
+
 const pages = [
-  { name: "Tasks", link: "/tasks" },
-  { name: "New Task", link: "/newtask" },
-  { name: "About", link: "/about" },
+  { id: "01", name: "Tasks", link: "/tasks" },
+  { id: "02", name: "New Task", link: "/newtask" },
+  { id: "03", name: "About", link: "/about" },
 ];
 const settings = ["Profile", "Logout"];
 
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+function ResponsiveAppBar(props) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "auto",
+          flexDirection: "row",
+          py: 1.5,
+        }}
+      >
+        <AddTaskIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+        <Typography
+          variant="h5"
+          component="a"
+          href="/"
+          sx={{
+            fontWeight: 700,
+            letterSpacing: ".3rem",
+            color: "inherit",
+            textDecoration: "none",
+          }}
+        >
+          TASKHUB
+        </Typography>
+      </Box>
+      <Divider />
+      <List>
+        {pages.map((item) => (
+          <Box
+            sx={{ textDecoration: "none", padding: 0 }}
+            color="inherit"
+            key={item.index}
+            component={Link}
+            to={item.link}
+          >
+            <ListItemButton
+              sx={{
+                paddingLeft: 4,
+              }}
+            >
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          </Box>
+        ))}
+      </List>
+    </Box>
+  );
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <AppBar position="static">
@@ -69,14 +130,13 @@ function ResponsiveAppBar() {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
               color="inherit"
+              onClick={handleDrawerToggle}
             >
               <MenuIcon />
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "left",
@@ -86,19 +146,18 @@ function ResponsiveAppBar() {
                 vertical: "top",
                 horizontal: "left",
               }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
+                mt: 1,
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page.index}>
                   <Button
                     component={Link}
                     to={page.link}
                     color="inherit"
-                    textAlign="center"
+                    textalign="center"
                   >
                     {page.name}
                   </Button>
@@ -131,7 +190,6 @@ function ResponsiveAppBar() {
                 component={Link}
                 to={page.link}
                 key={page.name}
-                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.name}
@@ -142,7 +200,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Lakshan" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Lakshan" src="#" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -163,13 +221,33 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textalign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
         </Toolbar>
       </Container>
+      <div>
+        <SwipeableDrawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawer}
+        </SwipeableDrawer>
+      </div>
     </AppBar>
   );
 }
