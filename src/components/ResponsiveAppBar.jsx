@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -10,12 +10,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
@@ -51,7 +48,7 @@ function ResponsiveAppBar(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawer = (
+  const drawerModal = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Box
         sx={{
@@ -80,11 +77,11 @@ function ResponsiveAppBar(props) {
       </Box>
       <Divider />
       <List>
-        {pages.map((item) => (
+        {pages.map((item, index) => (
           <Box
             sx={{ textDecoration: "none", padding: 0 }}
             color="inherit"
-            key={item.index}
+            key={index}
             component={Link}
             to={item.link}
           >
@@ -132,13 +129,7 @@ function ResponsiveAppBar(props) {
           >
             TASKHUB
           </Typography>
-
-          <Box
-            sx={{
-              flexGrow: 0,
-              display: { xs: "flex", sm: "none", md: "none" },
-            }}
-          >
+          <Box>
             <IconButton
               size="medium"
               aria-label="account of current user"
@@ -146,6 +137,8 @@ function ResponsiveAppBar(props) {
               aria-haspopup="true"
               color="inherit"
               sx={{
+                flexGrow: 0,
+                display: { xs: "flex", sm: "none", md: "none" },
                 padding: 1.2,
                 backgroundColor: "#42A5F540",
                 boxShadow: "1px 1px 10px #00000020",
@@ -154,35 +147,6 @@ function ResponsiveAppBar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              sx={{
-                display: { sm: "block", md: "none" },
-                mt: 1,
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page.index}>
-                  <Button
-                    component={Link}
-                    to={page.link}
-                    color="inherit"
-                    textalign="center"
-                  >
-                    {page.name}
-                  </Button>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
           <Box
             sx={{
@@ -217,11 +181,11 @@ function ResponsiveAppBar(props) {
               display: { xs: "none", sm: "flex", md: "flex" },
             }}
           >
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
                 component={Link}
                 to={page.link}
-                key={page.name}
+                key={index}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.name}
@@ -230,11 +194,9 @@ function ResponsiveAppBar(props) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Lakshan" src="#" />
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar alt="Lakshan" src="#" />
+            </IconButton>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -251,8 +213,8 @@ function ResponsiveAppBar(props) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {settings.map((setting, index) => (
+                <MenuItem key={index} onClick={handleCloseUserMenu}>
                   <Typography textalign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -260,26 +222,25 @@ function ResponsiveAppBar(props) {
           </Box>
         </Toolbar>
       </Container>
-      <div>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </div>
+
+      <Drawer
+        container={container}
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        sx={{
+          display: { xs: "block", sm: "none" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: drawerWidth,
+          },
+        }}
+      >
+        {drawerModal}
+      </Drawer>
     </AppBar>
   );
 }
