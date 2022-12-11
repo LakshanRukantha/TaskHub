@@ -13,7 +13,8 @@ const Home = () => {
         Home
       </Typography>
       <Divider sx={{ borderBottomWidth: 2 }} />
-      <Box></Box>
+      <Box>
+      </Box>
     </Container>
   );
 };
