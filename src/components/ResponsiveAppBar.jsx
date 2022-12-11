@@ -1,37 +1,36 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
+import HomeIcon from "@mui/icons-material/Home";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import InfoIcon from "@mui/icons-material/Info";
+import { Container, Divider, Typography, Box } from "@mui/material";
 
 const drawerWidth = 240;
 
 const pages = [
-  { id: "01", name: "Tasks", link: "/tasks", icon: <AssignmentIcon /> },
-  { id: "02", name: "New Task", link: "/newtask", icon: <AddCircleIcon /> },
-  { id: "03", name: "About", link: "/about", icon: <InfoIcon /> },
+  { id: "01", name: "Home", link: "/", icon: <HomeIcon /> },
+  { id: "02", name: "Tasks", link: "/tasks", icon: <AssignmentIcon /> },
+  { id: "03", name: "New Task", link: "/newtask", icon: <AddCircleIcon /> },
+  { id: "04", name: "About", link: "/about", icon: <InfoIcon /> },
 ];
 const settings = ["Profile", "Logout"];
 
 function ResponsiveAppBar(props) {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -42,7 +41,7 @@ function ResponsiveAppBar(props) {
   };
 
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -108,7 +107,7 @@ function ResponsiveAppBar(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AddTaskIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
