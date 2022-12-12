@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Divider, Typography, Box } from "@mui/material";
+import { Container, Divider, Typography, Box, Alert } from "@mui/material";
 
 const About = () => {
   return (
@@ -13,7 +13,11 @@ const About = () => {
         About
       </Typography>
       <Divider sx={{ borderBottomWidth: 2 }} />
-      <Box></Box>
+      <Box>
+        <Alert severity="info">
+          Page is under development. Please check back later.
+        </Alert>
+      </Box>
     </Container>
   );
 };
