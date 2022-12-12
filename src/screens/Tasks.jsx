@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Grid, Typography, Box, Divider } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Typography,
+  Box,
+  Divider,
+  CircularProgress,
+} from "@mui/material";
 
 import TaskCard from "../components/TaskCard";
 
@@ -9,8 +16,7 @@ function Tasks() {
   const [taskUpdated, setTaskUpdated] = useState(false);
 
   useEffect(() => {
-    const apiUrl =
-      "https://react-firebase-6ae07-default-rtdb.firebaseio.com/tasks.json";
+    const apiUrl = `${import.meta.env.VITE_FIREBASE_DB_URL}/tasks.json`;
     axios.get(apiUrl).then((response) => {
       if (response.data) {
         setTasks(Object.values(response.data));
@@ -19,7 +25,9 @@ function Tasks() {
   }, [taskUpdated]);
 
   const handleComplete = (taskid) => {
-    const apiUrl = `https://react-firebase-6ae07-default-rtdb.firebaseio.com/tasks/${taskid}.json`;
+    const apiUrl = `${
+      import.meta.env.VITE_FIREBASE_DB_URL
+    }/tasks/${taskid}.json`;
     axios.patch(apiUrl, { status: "Completed" }).then((response) => {
       if (response.status === 200) {
         setTaskUpdated(!taskUpdated);
@@ -28,7 +36,9 @@ function Tasks() {
   };
 
   const handleDelete = (taskid) => {
-    const apiUrl = `https://react-firebase-6ae07-default-rtdb.firebaseio.com/tasks/${taskid}.json`;
+    const apiUrl = `${
+      import.meta.env.VITE_FIREBASE_DB_URL
+    }/tasks/${taskid}.json`;
     axios.delete(apiUrl).then((response) => {
       if (response.status === 200) {
         setTaskUpdated(!taskUpdated);
@@ -51,25 +61,17 @@ function Tasks() {
               margin: "0 auto",
             }}
           >
-            <p>No tasks to display!</p>
+            <Typography>No tasks to display!</Typography>
           </span>
         </>
       );
     if (tasks.length === 0)
       return (
         <>
-          <span
-            className="loading"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              margin: "0 auto",
-            }}
-          >
-            Loading...
-          </span>
+          <CircularProgress
+            sx={{ margin: "0 auto", animationDuration: "400ms" }}
+            color="primary"
+          />
         </>
       );
     else
@@ -93,7 +95,7 @@ function Tasks() {
       }}
     >
       <Typography fontWeight="600" variant="h5" sx={{ py: 2 }}>
-        About
+        Current Tasks
       </Typography>
       <Divider sx={{ borderBottomWidth: 2 }} />
       <Box></Box>

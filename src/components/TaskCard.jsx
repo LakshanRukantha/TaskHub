@@ -9,6 +9,8 @@ import {
   Button,
 } from "@mui/material";
 import EventIcon from "@mui/icons-material/Event";
+import GradeIcon from "@mui/icons-material/Grade";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 const TaskCard = (props) => {
   return (
@@ -25,15 +27,21 @@ const TaskCard = (props) => {
     >
       <Paper
         elevation={1}
+        outline={props.taskInfo.status === "Completed" ? "success" : null}
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           width: 350,
-          minHeight: 300,
+          mb: 1.5,
+          p: 1,
+
+          minHeight: 240,
         }}
       >
-        <Box
+        <Grid
+          item
+          container
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -41,8 +49,13 @@ const TaskCard = (props) => {
             justifyContent: "space-between",
           }}
         >
-          <Box sx={{ p: 1 }}>
-            <Typography variant="body1" component="h4" sx={{ p: 1 }}>
+          <Box>
+            <Typography
+              variant="body1"
+              component="h4"
+              color="inherit"
+              sx={{ py: 1 }}
+            >
               {props.taskInfo.title}
             </Typography>
             <Divider />
@@ -54,8 +67,14 @@ const TaskCard = (props) => {
               }}
             >
               <Chip
-                icon={<EventIcon />}
-                color="primary"
+                icon={
+                  props.taskInfo.status === "New" ? (
+                    <GradeIcon />
+                  ) : (
+                    <CheckCircleOutlineIcon />
+                  )
+                }
+                color={props.taskInfo.status === "New" ? "primary" : "success"}
                 size="small"
                 label={props.taskInfo.status}
               />
@@ -67,15 +86,35 @@ const TaskCard = (props) => {
               />
             </Box>
 
-            <Typography variant="h6" component="h4">
-              {props.taskInfo.description}
-            </Typography>
+            <Box sx={{ my: 1, minHeight: 100 }}>
+              <Typography variant="body1" color="text.secondary">
+                {props.taskInfo.description}
+              </Typography>
+            </Box>
           </Box>
-          <Box>
-            <Button variant="contained">Delete</Button>
-            <Button>Complete</Button>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "flex-end",
+              gap: 1,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => props.onDelete(props.taskInfo.task_id)}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => props.onComplete(props.taskInfo.task_id)}
+            >
+              Complete
+            </Button>
           </Box>
-        </Box>
+        </Grid>
       </Paper>
     </Grid>
   );
