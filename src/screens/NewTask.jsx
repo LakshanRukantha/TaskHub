@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { v4 as uuid4 } from "uuid";
 import { Divider, Typography, Box, TextField, Button } from "@mui/material";
 import { Container } from "@mui/system";
+import AlertText from "../components/AlertText";
 
 const NewTask = (props) => {
   const [message, setMessage] = useState("");
@@ -17,14 +17,16 @@ const NewTask = (props) => {
 
   const onSubmit = (values, { resetForm }) => {
     const taskId = uuid4();
-    const apiUrl = `${import.meta.env.VITE_FIREBASE_DB_URL}/tasks/${taskId}.json`;
+    const apiUrl = `${
+      import.meta.env.VITE_FIREBASE_DB_URL
+    }/tasks/${taskId}.json`;
     const task = { ...values, status: "New", task_id: taskId };
 
     axios
       .put(apiUrl, task)
       .then((response) => {
         if (response.status === 200) {
-          setMessage("Task saved successfully");
+          setMessage("Task saved successfully.");
           resetForm({ values: "" });
         }
       })
@@ -67,7 +69,21 @@ const NewTask = (props) => {
         Add New Task
       </Typography>
       <Divider sx={{ borderBottomWidth: 2 }} />
-      <Box sx={{ margin: "auto", py: 2, maxWidth: 500 }}>
+      <Box
+        sx={{
+          margin: "auto",
+          py: 2,
+          maxWidth: 500,
+        }}
+      >
+        {message ? (
+          <AlertText
+            alertText={`${message}`}
+            close={false}
+            linkTo="/tasks"
+            linkText=" - See all tasks."
+          />
+        ) : null}
         <form onSubmit={formik.handleSubmit}>
           <Box sx={{ pb: 1 }}>
             <Typography variant="h6">Subject</Typography>
@@ -78,9 +94,9 @@ const NewTask = (props) => {
               varient="outlined"
               id="outlined-basic"
               name="title"
-              maxLength="150"
               label="Subject"
               variant="outlined"
+              inputProps={{ maxLength: 80 }}
               helperText={
                 formik.touched.title && formik.errors.title
                   ? formik.errors.title
@@ -107,7 +123,7 @@ const NewTask = (props) => {
               id="description"
               label="Description"
               variant="outlined"
-              maxLength="200"
+              inputProps={{ maxLength: 160 }}
               helperText={
                 formik.touched.description && formik.errors.description
                   ? formik.errors.description
@@ -154,11 +170,6 @@ const NewTask = (props) => {
             </Button>
           </Box>
         </form>
-        {message ? (
-          <div className="alert alert-primary mt-4" role="alert">
-            {message} - Click here to see <Link to="/tasks">all tasks</Link>
-          </div>
-        ) : null}
       </Box>
     </Container>
   );

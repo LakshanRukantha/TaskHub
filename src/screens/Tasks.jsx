@@ -7,9 +7,12 @@ import {
   Box,
   Divider,
   CircularProgress,
+  Stack,
+  Alert,
 } from "@mui/material";
 
 import TaskCard from "../components/TaskCard";
+import { Link } from "react-router-dom";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -50,19 +53,19 @@ function Tasks() {
     if (tasks === null)
       return (
         <>
-          <span
-            className="no-tasks"
-            style={{
+          <Stack
+            sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              textAlign: "center",
-              minHeight: "85vh",
-              margin: "0 auto",
+              width: "100%",
             }}
           >
-            <Typography>No tasks to display!</Typography>
-          </span>
+            <Alert severity="info">
+              No tasks to display! Click <Link to="/newtask">here</Link> to add
+              new task.
+            </Alert>
+          </Stack>
         </>
       );
     if (tasks.length === 0)
@@ -92,13 +95,13 @@ function Tasks() {
       sx={{
         backgroundColor: "#0081CF10",
         minHeight: "90.8vh",
+        pb: 2,
       }}
     >
       <Typography fontWeight="600" variant="h5" sx={{ py: 2 }}>
         Current Tasks
       </Typography>
       <Divider sx={{ borderBottomWidth: 2 }} />
-      <Box></Box>
       <Grid
         container
         spacing={2}

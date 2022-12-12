@@ -2,7 +2,7 @@ import React from "react";
 import {
   Box,
   Grid,
-  Paper,
+  Card,
   Typography,
   Chip,
   Divider,
@@ -25,18 +25,19 @@ const TaskCard = (props) => {
         justifyContent: "center",
       }}
     >
-      <Paper
+      <Card
         elevation={1}
         outline={props.taskInfo.status === "Completed" ? "success" : null}
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          wordBreak: "break-word",
+          maxWidth: 350,
           width: 350,
           mb: 1.5,
           p: 1,
-
-          minHeight: 240,
+          minHeight: 260,
         }}
       >
         <Grid
@@ -50,14 +51,23 @@ const TaskCard = (props) => {
           }}
         >
           <Box>
-            <Typography
-              variant="body1"
-              component="h4"
-              color="inherit"
-              sx={{ py: 1 }}
+            <Box
+              sx={{
+                minHeight: 60,
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
-              {props.taskInfo.title}
-            </Typography>
+              <Typography
+                variant="body1"
+                component="h4"
+                color="inherit"
+                sx={{ pb: 1 }}
+              >
+                {props.taskInfo.title}
+              </Typography>
+            </Box>
+
             <Divider />
             <Box
               sx={{
@@ -67,6 +77,7 @@ const TaskCard = (props) => {
               }}
             >
               <Chip
+                sx={{ fontSize: 12 }}
                 icon={
                   props.taskInfo.status === "New" ? (
                     <GradeIcon />
@@ -79,6 +90,7 @@ const TaskCard = (props) => {
                 label={props.taskInfo.status}
               />
               <Chip
+                sx={{ fontSize: 12 }}
                 icon={<EventIcon />}
                 color="primary"
                 size="small"
@@ -115,7 +127,7 @@ const TaskCard = (props) => {
             </Button>
           </Box>
         </Grid>
-      </Paper>
+      </Card>
     </Grid>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Divider, Typography, Box } from "@mui/material";
+import { Container, Divider, Typography, Box, Alert } from "@mui/material";
 
 const Home = () => {
   return (
@@ -14,6 +14,9 @@ const Home = () => {
       </Typography>
       <Divider sx={{ borderBottomWidth: 2 }} />
       <Box>
+        <Alert severity="info">
+          Page is under development. Please check back later.
+        </Alert>
       </Box>
     </Container>
   );
