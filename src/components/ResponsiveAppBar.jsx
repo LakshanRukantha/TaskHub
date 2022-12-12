@@ -40,7 +40,6 @@ function ResponsiveAppBar(props) {
     setAnchorElUser(null);
   };
 
-  const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -102,9 +101,6 @@ function ResponsiveAppBar(props) {
       </List>
     </Box>
   );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <AppBar position="sticky">
@@ -223,7 +219,6 @@ function ResponsiveAppBar(props) {
       </Container>
 
       <Drawer
-        container={container}
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
