@@ -1,12 +1,15 @@
 import React from "react";
 import { Container, Divider, Typography, Box, Alert } from "@mui/material";
+import background from "../assets/background.svg";
 
 const Home = () => {
   return (
     <Container
       sx={{
         backgroundColor: "#0081CF10",
-        minHeight: "90.8vh",
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        minHeight: "91vh",
       }}
     >
       <Typography fontWeight="600" variant="h5" sx={{ py: 2 }}>
