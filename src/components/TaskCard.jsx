@@ -26,8 +26,7 @@ const TaskCard = (props) => {
       }}
     >
       <Card
-        elevation={1}
-        outline={props.taskInfo.status === "Completed" ? "success" : null}
+        elevation={2}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -55,7 +54,8 @@ const TaskCard = (props) => {
               sx={{
                 minHeight: 60,
                 display: "flex",
-                justifyContent: "center",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
               }}
             >
               <Typography
@@ -92,6 +92,7 @@ const TaskCard = (props) => {
               <Chip
                 sx={{ fontSize: 12 }}
                 icon={<EventIcon />}
+                variant="outlined"
                 color="primary"
                 size="small"
                 label={props.taskInfo.dueDate}

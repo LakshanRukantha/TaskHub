@@ -3,8 +3,9 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { v4 as uuid4 } from "uuid";
 import { Divider, Typography, Box, TextField, Button } from "@mui/material";
-import { Container } from "@mui/system";
+import { borderRadius, Container } from "@mui/system";
 import AlertText from "../components/AlertText";
+import background from "../assets/background.svg";
 
 const NewTask = (props) => {
   const [message, setMessage] = useState("");
@@ -61,8 +62,10 @@ const NewTask = (props) => {
   return (
     <Container
       sx={{
-        backgroundColor: "#0081CF10",
+        backgroundImage: `url(${background})`,
         minHeight: "90.8vh",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Typography fontWeight="600" variant="h5" sx={{ py: 2 }}>
@@ -72,7 +75,11 @@ const NewTask = (props) => {
       <Box
         sx={{
           margin: "auto",
-          py: 2,
+          p: 1,
+          backdropFilter: "blur(10px)",
+          border: "1px solid #00000020",
+          borderRadius: 1,
+          width: "100%",
           maxWidth: 500,
         }}
       >

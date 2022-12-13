@@ -13,6 +13,7 @@ import {
 
 import TaskCard from "../components/TaskCard";
 import { Link } from "react-router-dom";
+import background from "../assets/background.svg";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -93,7 +94,7 @@ function Tasks() {
   return (
     <Container
       sx={{
-        backgroundColor: "#0081CF10",
+        backgroundImage: `url(${background})`,
         minHeight: "90.8vh",
         pb: 2,
       }}
