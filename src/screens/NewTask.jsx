@@ -62,7 +62,8 @@ const NewTask = (props) => {
   return (
     <Container
       sx={{
-        backgroundImage: `url(${background})`,
+        background: "linear-gradient(to left, #56ccf270, #2f80ed70)",
+
         minHeight: "90.8vh",
         display: "flex",
         flexDirection: "column",
@@ -76,6 +77,7 @@ const NewTask = (props) => {
         sx={{
           margin: "auto",
           p: 1,
+          backgroundColor: "#ffffff90",
           backdropFilter: "blur(10px)",
           border: "1px solid #00000020",
           borderRadius: 1,
