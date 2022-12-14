@@ -17,7 +17,10 @@ const Home = () => {
       </Typography>
       <Divider sx={{ borderBottomWidth: 2 }} />
       <Box>
-        <Alert severity="info">
+        <Alert
+          severity="info"
+          sx={{ display: "flex", maxWidth: 500, mx: "auto", mt: 2 }}
+        >
           Page is under development. Please check back later.
         </Alert>
       </Box>
