@@ -116,12 +116,16 @@ const TaskCard = (props) => {
             <Button
               variant="outlined"
               color="error"
+              loadingposition="start"
+              startIcon={<></>}
               onClick={() => props.onDelete(props.taskInfo.task_id)}
             >
               Delete
             </Button>
             <Button
               variant="contained"
+              loadingposition="start"
+              startIcon={<></>}
               onClick={() => props.onComplete(props.taskInfo.task_id)}
             >
               Complete

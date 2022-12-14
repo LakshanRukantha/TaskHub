@@ -10,7 +10,7 @@ export default function AlertText(props) {
   const [open, setOpen] = React.useState(true);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box>
       <Collapse in={open}>
         <Alert
           action={
@@ -25,7 +25,7 @@ export default function AlertText(props) {
               <CloseIcon fontSize="inherit" />
             </IconButton>
           }
-          sx={{ mb: 2 }}
+          sx={{ display: "flex", maxWidth: 500, mx: "auto", mt: 2 }}
         >
           {props.alertText}
           <Link variant="body2" underline="hover" href={props.linkTo}>

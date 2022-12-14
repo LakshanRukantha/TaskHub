@@ -17,10 +17,15 @@ const About = () => {
   return (
     <Container
       sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
         backgroundColor: "#0081CF10",
         backgroundImage: `url(${background})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
+        minHeight: "92vh",
         py: 4,
       }}
     >
@@ -35,7 +40,7 @@ const About = () => {
           border: "1px solid #00000020",
           borderRadius: 1,
           p: 2,
-          minHeight: "85vh",
+          minHeight: "80vh",
           maxWidth: "500px",
           margin: "auto",
         }}
@@ -48,14 +53,6 @@ const About = () => {
             flexDirection: "column",
           }}
         >
-          <CardMedia
-            component="img"
-            image={""}
-            sx={{
-              maxWidth: 80,
-              maxHeight: 80,
-            }}
-          />
           <AddTaskIcon fontSize="large" />
           <Typography
             variant="h1"

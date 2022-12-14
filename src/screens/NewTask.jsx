@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import { v4 as uuid4 } from "uuid";
-import { Divider, Typography, Box, TextField, Button } from "@mui/material";
-import { borderRadius, Container } from "@mui/system";
+import { Divider, Typography, Box, TextField } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Container } from "@mui/system";
 import AlertText from "../components/AlertText";
-import background from "../assets/background.svg";
 
 const NewTask = (props) => {
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     title: "",
@@ -23,10 +24,13 @@ const NewTask = (props) => {
     }/tasks/${taskId}.json`;
     const task = { ...values, status: "New", task_id: taskId };
 
+    setLoading(true);
+
     axios
       .put(apiUrl, task)
       .then((response) => {
         if (response.status === 200) {
+          setLoading(false);
           setMessage("Task saved successfully.");
           resetForm({ values: "" });
         }
@@ -73,10 +77,19 @@ const NewTask = (props) => {
         Add New Task
       </Typography>
       <Divider sx={{ borderBottomWidth: 2 }} />
+      {message ? (
+        <AlertText
+          alertText={`${message}`}
+          close={false}
+          linkTo="/tasks"
+          linkText=" - See all tasks."
+        />
+      ) : null}
       <Box
         sx={{
           margin: "auto",
           p: 1,
+          py: 2,
           backgroundColor: "#ffffff90",
           backdropFilter: "blur(10px)",
           border: "1px solid #00000020",
@@ -85,21 +98,12 @@ const NewTask = (props) => {
           maxWidth: 500,
         }}
       >
-        {message ? (
-          <AlertText
-            alertText={`${message}`}
-            close={false}
-            linkTo="/tasks"
-            linkText=" - See all tasks."
-          />
-        ) : null}
         <form onSubmit={formik.handleSubmit}>
           <Box sx={{ pb: 1 }}>
-            <Typography variant="h6">Subject</Typography>
+            <Typography variant="subtitle1">Subject</Typography>
             <TextField
               fullWidth
               error={formik.touched.title && formik.errors.title ? true : false}
-              margin="dense"
               varient="outlined"
               id="outlined-basic"
               name="title"
@@ -118,7 +122,7 @@ const NewTask = (props) => {
           </Box>
 
           <Box sx={{ pb: 1 }}>
-            <Typography variant="h6">Description</Typography>
+            <Typography variant="subtitle1">Description</Typography>
             <TextField
               fullWidth
               error={
@@ -128,7 +132,6 @@ const NewTask = (props) => {
               }
               multiline
               rows={4}
-              margin="dense"
               id="description"
               label="Description"
               variant="outlined"
@@ -144,9 +147,7 @@ const NewTask = (props) => {
             />
           </Box>
           <Box sx={{ pb: 1 }}>
-            <Typography variant="h6" sx={{ mb: 1 }}>
-              Due Date
-            </Typography>
+            <Typography variant="subtitle1">Due Date</Typography>
             <TextField
               fullWidth
               error={
@@ -171,12 +172,19 @@ const NewTask = (props) => {
               display: "flex",
               alignItems: "right",
               justifyContent: "flex-end",
-              pt: 4,
+              pt: 2,
             }}
           >
-            <Button fullWidth type="submit" variant="contained">
+            <LoadingButton
+              loading={loading}
+              fullWidth
+              type="submit"
+              loadingPosition="start"
+              startIcon={<></>}
+              variant="contained"
+            >
               Submit
-            </Button>
+            </LoadingButton>
           </Box>
         </form>
       </Box>
