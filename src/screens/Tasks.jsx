@@ -94,7 +94,7 @@ function Tasks() {
   return (
     <Container
       sx={{
-        backgroundImage: `url(${background})`,
+        background: "linear-gradient(to left, #56ccf270, #2f80ed70)", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         minHeight: "90.8vh",
         pb: 2,
       }}

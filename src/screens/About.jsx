@@ -19,7 +19,9 @@ const About = () => {
       sx={{
         backgroundColor: "#0081CF10",
         backgroundImage: `url(${background})`,
-        minHeight: "90.8vh",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        py: 4,
       }}
     >
       <Box
@@ -28,9 +30,14 @@ const About = () => {
           alignItems: "center",
           justifyContent: "space-between",
           flexDirection: "column",
-          pt: 5,
-          minHeight: "90vh",
-          top: "2rem",
+          backgroundColor: "#ffffff10",
+          backdropFilter: "blur(5px)",
+          border: "1px solid #00000020",
+          borderRadius: 1,
+          p: 2,
+          minHeight: "85vh",
+          maxWidth: "500px",
+          margin: "auto",
         }}
       >
         <Box
